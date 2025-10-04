@@ -1,4 +1,4 @@
-name: Deploy to Azure VM
+name: Deploy to EC2 instance
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Deploy to Azure VM via SSH
+    - name: Deploy to EC2 instance via SSH
       uses: appleboy/ssh-action@v0.1.10
       with:
         host: ${{ secrets.VM_HOST }}
@@ -20,19 +20,19 @@ jobs:
         key: ${{ secrets.VM_SSH_KEY }}
         script: |
           set -e
-          cd ~/exoplanets-web
+          cd ~/exovision
 
           echo "Pulling latest changes..."
           git fetch --all
           git reset --hard origin/main
           
           echo "Updating dependencies..."
-          source ~/exoplanets-web/venv/bin/activate
+          source ~/exovision/venv/bin/activate
           pip install -r requirements.txt --upgrade
           
-          echo "Restarting exoplanets backend service..."
+          echo "Restarting exovision backend service..."
 
-          sudo systemctl restart exoplanets
+          sudo systemctl restart exovision
           echo "Deployment completed successfully."
           echo "Waiting for a few seconds to ensure the service is up..."
           sleep 10
