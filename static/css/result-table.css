@@ -1,0 +1,97 @@
+.sort-arrow {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin-left: 5px;
+}
+
+.table-wrapper::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background: rgba(100, 181, 246, 0.5);
+    border-radius: 4px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 181, 246, 0.7);
+}
+
+th:hover {
+    background: rgba(100, 181, 246, 0.3) !important;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: rgba(100, 181, 246, 0.2) !important;
+    border-color: rgba(100, 181, 246, 0.4) !important;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .table-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .table-controls>div {
+        justify-content: center;
+    }
+
+    .table-pagination {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .pagination-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+
+    .sort-arrow {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-controls {
+        gap: 8px;
+    }
+
+    .table-pagination {
+        gap: 8px;
+    }
+
+    .pagination-btn {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+
+    .sort-arrow {
+        font-size: 0.6rem;
+    }
+
+    th, td {
+        padding: 6px 4px;
+        font-size: 0.8rem;
+    }
+
+    .table-wrapper {
+        font-size: 0.8rem;
+    }
+}

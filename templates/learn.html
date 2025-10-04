@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoVision: Learn more about Exoplanets</title>
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/transit.css">
+
+</head>
+
+<body>
+    {% include 'components/chat.html' %}
+
+    <div class="stars"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="logo">ExoVision: Learn more about Exoplanets</h1>
+            <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+                <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- What are exoplanets? -->
+            <div class="results-section">
+                <h2 class="card-title">
+                    What are exoplanets?
+                </h2>
+                <p>
+                    An exoplanet is just a planet that orbits a star outside our solar system.
+                </p>
+                <p>
+                    Think of it like this: Earth, Mars, and Jupiter all orbit our Sun 'they’re regular planets'. But if
+                    there’s a planet
+                    orbiting another star far away in space, that’s an exoplanet (short for “extrasolar planet”).
+                </p>
+                <p>
+                    They can be big like Jupiter, small like Earth, or totally strange types we don’t even have in our
+                    solar system. Some
+                    are scorching hot, some are frozen, and a few might even be in the right conditions for life!
+                </p>
+            </div>
+
+            <!-- What is the Transit Method? -->
+            <div class="results-section">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" />
+                    </svg>
+                    What is the Transit Method?
+                </h2>
+                <p>
+                    The transit method finds planets by watching a star’s brightness.
+                    When a planet passes in front of its star, it blocks a little bit of the light,
+                    causing the star to look slightly dimmer for a short time.
+                    These dips in brightness show up as a repeating pattern called a <em>light curve</em>.
+                    <b style="text-decoration: underline;">
+                        see the video below to understand how it works.
+                    </b>
+                </p>
+                <ul class="transit-list">
+                    <li><strong>Depth</strong>: how much the star’s light drops — linked to the planet’s size compared
+                        to the star.</li>
+                    <li><strong>Duration</strong>: how long the dimming lasts — depends on how fast the planet moves and
+                        the size of the
+                        star.</li>
+                    <li><strong>Period</strong>: how often the dips happen — tells us the length of the planet’s orbit
+                        (its year).</li>
+                </ul>
+            </div>
+            <!-- Exoplanet Transit Demo (Video) -->
+            <div class="results-section">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    </svg>
+                    Exoplanet Transit Demo (Video)
+                </h2>
+                <video autoplay muted loop playsinline id="planet-video" style="width: 100%; border-radius: 10px;">
+                    <source src="static/exoplanet-demo.mp4" type="video/mp4">
+                </video>
+                <p> 
+                </p>
+            </div>
+
+            <!-- Flux vs Time Chart -->
+            <div class="results-section">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                    </svg>
+                    Exoplanet light curve — Flux vs Time
+                </h2>
+                <p>
+                    Example 2D chart showing flux vs time for a star with a transiting exoplanet.
+                </p>
+                <br>
+                <div id="chart-container">
+                    <canvas id="fluxChart"></canvas>
+                </div>
+
+            </div>
+            <!-- Why every dip is not a exoplanet -->
+            <div class="results-section" id="why-every-dip-is-not-a-exoplanet">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z" />
+                    </svg>
+                    Why isn’t every dip a planet?
+                </h2>
+                <p>
+                    When we watch a star’s light, a dip usually means something passed in front of it.
+                    That “something” could be a planet… but not always! Sometimes we get tricked.
+                    Here are the 5 main reasons:
+                </p>
+                <ol class="transit-list">
+                    <li><strong>Two stars, not one:</strong> If two stars orbit each other, one star can block the
+                        other, making a
+                        dip that looks like a planet’s shadow.</li>
+                    <li><strong>Extra star nearby:</strong> A background star (in front of or behind) can sneak into the
+                        picture and
+                        cause dips too.</li>
+                    <li><strong>Telescope mistakes:</strong> Small errors in the camera or sensors can create fake dips.
+                    </li>
+                    <li><strong>A tricky star:</strong> Some stars get dimmer or brighter on their own because of spots,
+                        flares, or
+                        shaking.</li>
+                    <li><strong>Space “static”:</strong> High-energy particles or glitches in the data can make false
+                        dips appear.
+                    </li>
+                </ol>
+                <p>
+                    Bottom line: Not every dip means a planet. Scientists use lots of tests (and now machine learning)
+                    to figure out
+                    which ones are real.
+                </p>
+            </div>
+
+
+            <!-- What We Can Learn -->
+            <div class="results-section">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M16,6L18.29,8.29L13.41,13.17L9.41,9.17L2,16.59L3.41,18L9.41,12L13.41,16L19.71,9.71L22,12V6H16Z" />
+                    </svg>
+                    What We Can Learn
+                </h2>
+                <ul>
+                    <li><strong>Planet size</strong>: The bigger the dip, the bigger the planet (relative to the star).
+                    </li>
+                    <li><strong>Orbital period</strong>: The time between dips tells us how long the planet takes to go
+                        around the
+                        star.</li>
+                    <li><strong>Orbit path</strong>: The shape of the dip shows how the planet passes across the star.
+                    </li>
+                    <li><strong>Atmospheres</strong>: Looking at dips in different colors of light can reveal gases in
+                        the planet’s
+                        atmosphere.</li>
+                </ul>
+            </div>
+
+
+            <!-- Limitations -->
+            <div class="results-section">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4Z" />
+                    </svg>
+                    Limitations
+                </h2>
+                <ul>
+                    <li><strong>Alignment bias</strong>: Only systems with orbits nearly edge-on to us will transit.
+                    </li>
+                    <li><strong>False positives</strong>: Eclipsing binaries or stellar variability can mimic signals.
+                    </li>
+                    <li><strong>Small planets</strong>: Produce very shallow dips that require high precision and
+                        repeated observation.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+            <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+        </div>
+
+    </div>
+    <script src="static/js/video.js"></script>
+    <script src="static/js/chart.min.js"></script>
+    <script src="static/js/chartjs-plugin-zoom.min.js"></script>
+    <script src="static/js/transit-ex-chart.js"></script>
+    <script src="static/js/main.js"></script>
+
+</body>
+
+</html>

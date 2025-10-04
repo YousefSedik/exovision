@@ -1,0 +1,10 @@
+venv
+__pycache__
+
+dataset/ir.ipynb
+dataset/cumulative_2025.09.17_10.17.25.csv
+dataset/KeplerData.ipynb
+# !dataset/content/artifacts/*
+models/*
+dataset/
+.env

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoVision: About Our Model</title>
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/transit.css">
+
+</head>
+
+<body>
+    <div class="stars"></div>
+
+    <div class="container">
+        <header>
+            <h1 class="logo">ExoVision: About Our Model</h1>
+            <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+                <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+            </div>
+        </header>
+
+        <div class="main-grid">
+            <!-- What are exoplanets? -->
+            <div class="results-section" id="what-data-do-we-use-to-identify-exoplanets">
+                <h2 class="card-title">Kepler / KOI feature reference</h2>
+                <p>
+                    Short descriptions of each KOI (Kepler Object of Interest) feature and why it matters for a machine
+                    learning model that predicts whether a signal is a real exoplanet transit or a false positive.
+                </p>
+
+                <table class="koi-features" style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th style="text-align:left; padding:8px; border-bottom:1px solid #ddd;">Feature</th>
+                            <th style="text-align:left; padding:8px; border-bottom:1px solid #ddd;">Meaning</th>
+                            <th style="text-align:left; padding:8px; border-bottom:1px solid #ddd;">Why it can affect ML
+                                prediction
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_period <b>Orbital Period</b> ()</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Orbital period of the candidate
+                                (days).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">True planets produce consistent,
+                                repeating dips
+                                at a fixed period; irregular or non-repeating periods often indicate noise or transient
+                                events.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_period_err1 (Orbital Period Error (Upper)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Positive uncertainty of the period
+                                estimate.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Large uncertainty reduces confidence
+                                in a
+                                periodic signal; models learn that low error is more planet-like.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_period_err2 (Orbital Period Error (Lower))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Negative uncertainty of the period
+                                estimate.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Same role as koi_period_err1 —
+                                asymmetry in
+                                errors can signal measurement issues or poor model fits.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_time0bk_err1 (Transit Epoch (BKJD) Error (Upper))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Positive uncertainty on the
+                                epoch/time-of-transit
+                                reference (backwards/benchmark).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Uncertain transit epoch weakens the
+                                case for
+                                regular timing; ML uses this to penalize poorly-timed events.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_time0bk_err2 (Transit Epoch (BKJD) Error (Lower))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Negative uncertainty on the
+                                epoch/time-of-transit
+                                reference.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Helps gauge reliability of transit
+                                timing; large
+                                error ranges suggest low confidence signals.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_time0_err1 (Transit Epoch (BJD) Error (Upper))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Positive uncertainty on the
+                                first-transit time
+                                estimate.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">If the reference transit time is
+                                imprecise, the
+                                periodicity test is weaker — bad for planet classification.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_time0_err2 (Transit Epoch (BJD) Error (Lower))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Negative uncertainty on the
+                                first-transit time
+                                estimate.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Same as koi_time0_err1 — asymmetric
+                                errors can
+                                expose fitting problems or data gaps.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_impact (Impact Parameter)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Impact parameter (0 = central
+                                transit, ~1 =
+                                grazing transit).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Transit shape depends on impact
+                                parameter;
+                                extreme values (very grazing) can mimic partial eclipses or be poorly fit by planet
+                                models.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_duration (Transit Duration)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Duration of the transit (typically in
+                                hours).
+                            </td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Duration combined with period and
+                                stellar size
+                                must obey orbital dynamics; unrealistic durations flag false positives.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_duration_err1 (Transit Duration Error (Upper))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Positive uncertainty in transit
+                                duration.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">High uncertainty reduces confidence
+                                in the
+                                transit shape; ML treats reliable durations as stronger planet indicators.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_duration_err2 (Transit Duration Error (Lower))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Negative uncertainty in transit
+                                duration.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Same as koi_duration_err1 — used to
+                                assess how
+                                well the transit is measured.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_depth (Transit Depth)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Depth of the transit (often in ppm —
+                                parts per
+                                million).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Depth indicates planet-to-star size
+                                ratio; very
+                                deep signals are often stellar eclipses, not planets. Critical for distinguishing
+                                planets from
+                                binaries or noise.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_prad (Planetary Radius)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Estimated planet radius (in Earth
+                                radii).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Unrealistic radii (too large for
+                                given depth &
+                                star) or values matching stellar companions point to false positives. Helps the model
+                                learn
+                                plausible planet sizes.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_prad_err1 Planetary Radius Error (Upper)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Positive uncertainty on planet
+                                radius.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Radius uncertainty affects
+                                confidence: large
+                                errors reduce trust that the candidate is a reasonable planet size.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_sma (Orbit Semi-Major Axis)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Semi-major axis (astronomical units,
+                                AU) —
+                                orbital distance estimate.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Links period, duration, and stellar
+                                properties;
+                                inconsistent sma relative to period/duration suggests wrong modeling or non-planetary
+                                origins.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_insol_err1 (Insolation Flux Error (Upper))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Positive uncertainty on insolation
+                                flux (stellar
+                                energy received).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">High uncertainty means poor
+                                constraints on
+                                physical context (habitability, equilibrium temperature) and can signal poor parameter
+                                estimation.
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_insol_err2 (Insolation Flux Error (Lower))</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Negative uncertainty on insolation
+                                flux.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Same as koi_insol_err1 — used by
+                                models to judge
+                                physical plausibility of the candidate.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_model_snr (Transit Signal-to-Noise Ratio)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Signal-to-noise ratio of the fitted
+                                transit
+                                model.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">High SNR typically means a clean,
+                                detectable
+                                transit; low SNR events are noisy and harder to trust as planets.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_num_transits (Number of Transits)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">How many transits were observed in
+                                the light
+                                curve.</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Multiple consistent transits (≥3,
+                                commonly)
+                                strengthen planet classification. Single-transit detections are ambiguous and more
+                                likely to be
+                                false positives or long-period planets.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_bin_oedp_sig (Odd-Even Depth Comparison Significance)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Metric / significance that indicates
+                                an eclipsing
+                                binary (OEDP = odd-even depth / other binary-diagnostic tests).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Directly flags binary-star-like
+                                behavior (e.g.,
+                                alternating deep/shallow eclipses). A high value suggests a false positive due to an
+                                eclipsing
+                                binary.</td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">koi_srad (Stellar Radius)</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Stellar radius (in solar radii).</td>
+                            <td style="padding:8px; border-bottom:1px solid #eee;">Transit depth scales with (Rp /
+                                Rstar)^2. Without
+                                stellar radius, depth and planet radius are ambiguous — stellar context is essential for
+                                physically
+                                meaningful predictions.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top:12px;">
+                    <strong>Short ML guidance:</strong> combine timing & periodicity features (period, epoch errors,
+                    num_transits)
+                    with shape features (depth, duration, impact) and context (stellar radius, sma, prad, SNR, binary
+                    diagnostics).
+                    Also use the error/uncertainty columns as confidence signals — the model can learn to down-weight
+                    uncertain
+                    measurements.
+                </p>
+            </div>
+            <!-- <div class="results-section" id="pipeline">
+                <h2 class="card-title">
+                    Our Pipeline
+                </h2>
+                <p>
+                    what-data-do-we-use-to
+                </p> -->
+            <!-- </div> -->
+
+        </div>
+        <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+            <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+        </div>
+
+    </div>
+    <script src="static/js/chart.min.js"></script>
+    <script src="static/js/chartjs-plugin-zoom.min.js"></script>
+    <script src="static/js/transit-ex-chart.js"></script>
+    <script src="static/js/main.js"></script>
+
+</body>
+
+</html>

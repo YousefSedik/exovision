@@ -1,0 +1,44 @@
+name: Deploy to Azure VM
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy to Azure VM via SSH
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.VM_HOST }}
+        username: ${{ secrets.VM_USER }}
+        key: ${{ secrets.VM_SSH_KEY }}
+        script: |
+          set -e
+          cd ~/exoplanets-web
+
+          echo "Pulling latest changes..."
+          git fetch --all
+          git reset --hard origin/main
+          
+          echo "Updating dependencies..."
+          source ~/exoplanets-web/venv/bin/activate
+          pip install -r requirements.txt --upgrade
+          
+          echo "Restarting exoplanets backend service..."
+
+          sudo systemctl restart exoplanets
+          echo "Deployment completed successfully."
+          echo "Waiting for a few seconds to ensure the service is up..."
+          sleep 10
+          # Purge Cached Content from Cloudflare
+          curl https://api.cloudflare.com/client/v4/zones/${{ secrets.ZONE_ID }}/purge_cache \
+          -H 'Content-Type: application/json' \
+          -H "Authorization: ${{ secrets.CLOUDFLARE_AUTHORIZATION_TOKEN }}" \
+          -d '{"purge_everything": true}'
+    

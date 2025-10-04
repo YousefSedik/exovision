@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoVision: Learn more about Exoplanets</title>
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/transit.css">
+    <link rel="stylesheet" href="static/css/tales-from-the-stars.css">
+
+</head>
+
+<body>
+    <div class="stars"></div>
+    {% include 'components/chat.html' %}
+
+    <div class="container">
+        <div class="bg"></div>
+
+        <div class="star-field">
+            <div class="layer"></div>
+            <div class="layer"></div>
+            <div class="layer"></div>
+            <header>
+                <h1 class="logo">ExoVision: The Tale of Kepler-16b?</h1>
+                <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+                    <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+                </div>
+            </header>
+
+            <div class="main-grid">
+                <!-- What are exoplanets? -->
+
+                <div class="results-section">
+                    <h2 class="card-title">
+                        The Tale of Kepler-16b
+                        <div style="display: flex; align-items: center; gap: 10px; margin-left: auto;">
+                            <select id="audio-language" onchange="changeLanguage()"
+                                style="padding: 8px 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #fff; font-size: 0.9rem; cursor: pointer;">
+                                <option value="english">English</option>
+                                <option value="arabic">العربية</option>
+                            </select>
+                            <audio id="kepler-audio" controls style="height: 35px;">
+                                <source id="audio-source" src="static/audio/kepler-16b-english.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    </h2>
+
+                    <script>
+                        function changeLanguage() {
+                            const title = document.getElementById('card-title');
+                            const language = document.getElementById('audio-language').value;
+                            const audio = document.getElementById('kepler-audio');
+                            const source = document.getElementById('audio-source');
+                            const text = document.getElementById('story-text');
+
+                            // Save current time and playing state
+                            const currentTime = audio.currentTime;
+                            const wasPlaying = !audio.paused;
+
+                            // Change audio source
+                            if (language === 'arabic') {
+                                source.src = 'static/audio/kepler-16b-arabic.mp3';
+
+                            } else {
+                                source.src = 'static/audio/kepler-16b-english.mp3';
+                            }
+
+                            // Reload audio with new source
+                            audio.load();
+
+                            // Restore time and playing state if desired
+                            audio.currentTime = currentTime;
+                            if (wasPlaying) {
+                                audio.play();
+                            }
+                        }
+                    </script>
+                    <p id="story-text"> </p>
+                    <p>
+                        "Imagine standing on a world with two suns."
+                    <p>
+                        That was once only the stuff of science fiction… until Kepler-16b proved it real.
+                    </p>
+                    <p>
+                        In 2011, NASA’s Kepler mission revealed something extraordinary. Scientists studying the star’s
+                        light curve noticed a
+                        pattern that was unlike anything seen before.
+
+                    </p>
+
+                    <p>
+                        Normally, a planet orbiting a single star produces a smooth, repeating dip in brightness. a
+                        simple
+                        signature of a
+                        transit. But Kepler-16b’s light curve was far from simple:
+                        Sometimes the dips were deep, sometimes shallow.
+
+                    </p>
+
+                    <p>
+                        Sometimes they overlapped.
+                        These variations told a story: a planet was passing not in front of one star, but two.
+
+                    </p>
+
+
+                    <p>
+                        By analyzing those dips — their depth, timing, and rhythm — astronomers uncovered the truth.
+                        Kepler-16b is a gas giant,
+                        about the size of Saturn, completing an orbit every ~229 days around a pair of suns locked in
+                        their
+                        own cosmic dance.
+
+                    </p>
+
+                    <p>
+                        This planet didn’t just add another point to NASA’s catalog.
+                        It expanded our imagination of what’s possible: that worlds can exist in systems with twin
+                        stars,
+                        stable and real, just
+                        like the fictional Tatooine.
+
+                    </p>
+
+                    <p>
+                        This is not just data.
+                        It is the story of shadows and light, of how a faint dip in brightness became the discovery of a
+                        new
+                        world.
+
+                    </p>
+
+                    <p>
+                        And it reminds us: every dip in the light curve could be the beginning of another story waiting
+                        to
+                        be told.
+
+                    </p>
+                    <p>
+                        And that even in the vast expanse of space, the stories we tell today, will continue to inspire
+                        the
+                        future explorers,
+                        scientists, and dreamers who will keep reaching for the stars.
+                    </p>
+                    </p>
+                </div>
+                <div class="results-section">
+                    <h2 class="card-title">
+                        Kepler-16b Light Curve
+                    </h2>
+                    <img src="static/images/kep2.jpeg"
+                        style="width: 100%; height: auto; object-fit: cover; border-radius: 10px; display: block;">
+                </div>
+                <div class="results-section">
+                    <h2 class="card-title">
+                        Kepler-16b Light Curve
+                    </h2>
+                    <img src="static/images/kep1.jpeg"
+                        style="width: 100%; height: auto; object-fit: cover; border-radius: 10px; display: block;">
+                </div>
+
+            </div>
+            <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+                <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+            </div>
+
+</body>
+
+</html>

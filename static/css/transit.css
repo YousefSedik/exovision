@@ -1,0 +1,86 @@
+#chart-container {
+    position: relative;
+    height: 420px
+}
+
+.controls {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px
+}
+
+button {
+    background: #162039;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    color: #dce9ff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer
+}
+
+button:active {
+    transform: translateY(1px)
+}
+
+p,li, ul {
+    font-size: 22px;
+    margin-bottom: 1em;
+}
+
+.transit-list {
+    margin-top: 10px;
+    /* space between paragraph and list */
+    padding-left: 20px;
+    /* indentation */
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    p, li, ul {
+        font-size: 18px;
+        margin-bottom: 0.8em;
+    }
+
+    .transit-list {
+        padding-left: 15px;
+    }
+
+    #chart-container {
+        height: 300px;
+    }
+
+    .controls {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    button {
+        padding: 6px 8px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    p, li, ul {
+        font-size: 16px;
+        margin-bottom: 0.6em;
+    }
+
+    .transit-list {
+        padding-left: 10px;
+    }
+
+    #chart-container {
+        height: 250px;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    button {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}

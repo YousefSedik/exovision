@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExoVision - Test Accuracy</title>
+    <link rel="shortcut icon" href="static/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/transit.css">
+</head>
+
+<body>
+    <div class="stars"></div>
+    {% include 'components/chat.html' %}
+
+    <div class="container">
+        <header>
+            <h1 class="logo">ExoVision: Test Custom Dataset Accuracy </h1>
+            <div style="margin-top: 16px; display: flex; justify-content: center; gap: 12px;">
+                <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+            </div>
+
+        </header>
+
+        <!-- Dataset Testing Section -->
+        <div class="card">
+            <h2 class="card-title">
+                Test Custom Dataset Accuracy
+                <sup class="card-title-sup">
+                    <!-- <a href="/model-info#testing-datasets" style="color: white;">
+                            What does accuracy testing show?
+                        </a> -->
+                </sup>
+            </h2>
+
+            <div class="hyperparameters">
+                <div class="input-group">
+                    <label for="model-name">Select Model</label>
+                    <select id="model-name">
+                        {% for model in models %}
+                        <option value="{{model}}">{{model}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <form>
+                <div class="input-group">
+                    <label>Upload Your Dataset (CSV)</label>
+                    <div class="file-upload">
+                        <input type="file" id="test-data-file" required accept=".csv"
+                            onchange="handleFileUpload(event)">
+                        <label for="test-data-file" class="file-upload-label">
+                            <svg class="icon" style="margin-bottom: 10px;" viewBox="0 0 24 24">
+                                <path
+                                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                            </svg>
+                            <p>Click to browse</p>
+                            <p style="font-size: 0.9rem; color: #888; margin-top: 5px;">
+                                Supports CSV format.<br>
+                                Expected fields:
+                            <p style="font-size: xx-small;">{{ required_features }}</p>
+                            <br>
+                            Lines starting with '#' will be ignored.<br>
+                            Delimiter: <code>,</code>
+                            </p>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="button" class="btn" onclick="testDatasetAccuracy()" id="test-dataset-btn">
+                    Test Accuracy
+                </button>
+
+                <div id="error-message" style="color: red; display: none;">
+                    error
+                </div>
+            </form>
+
+            <!-- Results Section -->
+            <div class="results" id="results" style="display: none; margin-top: 20px;">
+                <div class="results-section">
+                    <h3 style="color: #64b5f6; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <svg style="width: 24px; height: 24px; fill: currentColor;" viewBox="0 0 24 24">
+                            <path d="M3,3H21V5H3V3M3,7H21V9H3V7M3,11H21V13H3V11M3,15H21V17H3V15M3,19H21V21H3V19Z" />
+                        </svg>
+                        Accuracy Results
+                    </h3>
+
+                    <div id="accuracy-result-section">
+                        <!-- dynamically filled with test results -->
+                        <p><strong>Accuracy:</strong> <span id="accuracy-score"></span></p>
+                        <p><strong>Precision:</strong> <span id="precision-score"></span></p>
+                        <p><strong>Recall:</strong> <span id="recall-score"></span></p>
+                        <p><strong>F1-score:</strong> <span id="f1-score"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 16px; display: flex; justify-content: center; gap: 12px;">
+        <a class="btn" href="/" style="text-decoration: none;">Back to Home</a>
+    </div>
+
+
+
+    <script src="static/js/chart.min.js"></script>
+    <script src="static/js/chartjs-plugin-zoom.min.js"></script>
+    <script src="static/js/main.js"></script>
+    <script src="static/js/papaparse.min.js"></script>
+    <script>
+        function testDatasetAccuracy() {
+            // TODO: Hook this into your backend endpoint for accuracy testing
+            // Example: send file + model selection, get JSON {accuracy, precision, recall, f1}
+            document.getElementById("results").style.display = "block";
+            document.getElementById("accuracy-score").textContent = "92%";
+            document.getElementById("precision-score").textContent = "90%";
+            document.getElementById("recall-score").textContent = "88%";
+            document.getElementById("f1-score").textContent = "89%";
+        }
+    </script>
+</body>
+
+</html>

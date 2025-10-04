@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="static/css/main.css">
+<link rel="stylesheet" href="static/css/result-table.css">
+<div class="data-table-section" style="margin-top: 30px;" id="data-table-section">
+
+
+    <div class="table-controls"
+        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <button class="btn" style="padding: 8px 15px; font-size: 0.8rem;" id="export-btn">
+                Export Results</button>
+        </div>
+    </div>
+
+    <div class="table-wrapper"
+        style="overflow-x: auto; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);">
+        <table id="exoplanet-data-table" style="width: 100%; border-collapse: collapse; min-width: 800px;">
+            <thead>
+                <tr style="background: rgba(100, 181, 246, 0.2); border-bottom: 2px solid rgba(100, 181, 246, 0.3);">
+                    <th style="padding: 15px 12px; text-align: left; color: #64b5f6; font-weight: 600; cursor: pointer; user-select: none; transition: background 0.3s ease;"
+                        onclick="sortTable('0')">
+                        Prediction
+                    </th>
+                    {% for col in columns %}
+
+                    {% if loop.last %}
+                    {% else %}
+                    <th style="padding: 15px 12px; text-align: left; color: #64b5f6; font-weight: 600; cursor: pointer; user-select: none; transition: background 0.3s ease;"
+                        onclick="sortTable('{{loop.index1}}')">
+                        {{col}}
+
+                    </th>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Sample data rows -->
+                {% for i in range(num_rows) %}
+                <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.1); transition: background 0.3s ease;"
+                    onmouseover="this.style.background='rgba(100, 181, 246, 0.1)'"
+                    onmouseout="this.style.background='transparent'">
+                    {% if data['prediction'][i] == 'Confirmed' %}
+                    <td style="padding: 12px; text-align: center;">
+                        <span class="prediction-badge confirmed"
+                            style="background: rgba(76, 175, 80, 0.3); color: #4caf50; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(76, 175, 80, 0.5);">
+                            Confirmed
+                        </span>
+                    </td>
+                    {% elif data['prediction'][i] == 'Candidate' %}
+                    <td style="padding: 12px; text-align: center;">
+                        <span class="prediction-badge candidate"
+                            style="background: rgba(255, 193, 7, 0.3); color: #ffc107; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(255, 193, 7, 0.5);">
+                            Candidate
+                        </span>
+                    </td>
+                    {% else %}
+                    <td style="padding: 10px; text-align: center;">
+                        <span class="prediction-badge false-positive"
+                            style="background: rgba(244, 67, 54, 0.3); color: #f44336; padding: 4px 12px; border-radius: 15px; font-size: 0.8rem; font-weight: 600; border: 1px solid rgba(244, 67, 54, 0.5);">
+                            False
+                        </span>
+                    </td>
+                    {% endif %}
+
+                    {% for col in columns %}
+                    {% if loop.last %}
+
+                    {% else %}
+                    <td style="padding: 12px; color: #e0e0e0; font-size: 0.9rem;">
+                        {{ data[col][i] }}
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="table-summary"
+        style="margin-top: 20px; padding: 15px; background: rgba(100, 181, 246, 0.1); border-radius: 8px; border: 1px solid rgba(100, 181, 246, 0.2);">
+        <h4 style="color: #64b5f6; margin-bottom: 10px;">Dataset Summary</h4>
+        <div
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; font-size: 0.9rem;">
+            <div>
+                <span style="color: #4caf50; font-weight: 600;">Confirmed:</span>
+                <span style="color: #e0e0e0;" id="confirmed-count">{{count_confirmed}} </span>
+            </div>
+            <div>
+                <span style="color: #ffc107; font-weight: 600;">Candidates:</span>
+                <span style="color: #e0e0e0;" id="candidate-count">{{count_candidate}}</span>
+            </div>
+            <div>
+                <span style="color: #f44336; font-weight: 600;">False Positives:</span>
+                <span style="color: #e0e0e0;" id="false-positive-count">{{count_false_positive}}</span>
+            </div>
+            <div>
+                <span style="color: #64b5f6; font-weight: 600;">Total Entries:</span>
+                <span style="color: #e0e0e0;" id="total-count">{{total_count}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="static/js/result-table.js"></script>
